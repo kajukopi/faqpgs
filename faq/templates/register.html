@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block container %}
+		<div class="d-grid gap-2 col-12 mx-auto">
+			<div class="shadow p-3 mb-5 bg-body rounded">
+				<form method="POST">
+					{% csrf_token %}
+					{% for field in register_form %}
+					<!-- Name input -->
+					<div class="form-outline mb-2">
+						<input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="id_{{ field.name }}"
+							class="form-control" autocomplete="off" placeholder="{{ field.name|title }}" required>
+					</div>
+					{% endfor %}
+					<!-- Submit button -->
+					<div class="d-grid gap-2">
+						<button type="submit" class="btn btn-outline-secondary mb-4 btn-sm">
+							Register
+						</button>
+					</div>
+				</form>
+				<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+			</div>
+		</div>
+
+{% endblock %}

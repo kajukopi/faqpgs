@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block container %}
+<div class="container-fluid">
+  {% if user.is_active %}
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="input-group">
+      {% for field in form_pertanyaan %}
+      <input type="text" name="{{ field.name }}" id="id_{{ field.name }}" class="form-control" autocomplete="off"
+        placeholder="Apa yang anda ketahui tentang Pabrik GSI." value="{{semua}}" required>
+      {% endfor %}
+      <span class="input-group-append">
+        <button type="submit" class="btn btn-secondary bg-gradient-secondary">Send</button>
+      </span>
+    </div>
+  </form>
+  {% else %}
+
+  {% endif %}
+
+</div>
+{% endblock %}

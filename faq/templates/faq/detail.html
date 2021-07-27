@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block container %}
+{% for komen in komenan %}
+<div class="container">
+  <div class="row">
+    {% for image in images %}
+    {% if image.user_id == komen.user_id %}
+    {% ifchanged image.user %}<div class="col-2"><img src="{{image.img.url}}" alt="..." class="rounded-circle" style="width: 32px; height: 32px; object-fit: contain;"></div>{% endifchanged %}
+    {% endif %}
+    {% endfor %}
+    <div class="col-10">
+      <p class="text-justify"><strong>{{komen.user}}</strong> {{ komen.komen_text }} </p>
+    </div>
+  </div>
+
+  <div class="row mb-1">
+    
+    <div class="col-4">
+      {% for i in komen.get_data_pertanyaan %}
+      <form id="id_{{komen.id}}" class="" action="{% url 'faq:vote-komen' i.id komen.id  %}" method="post">
+        {% endfor %}
+        {% csrf_token %}
+        <a class="link-black" onclick="document.getElementById('id_{{komen.id}}').submit();">
+          &nbsp;&nbsp;&nbsp;<i class="fas fa-heart text-center"></i>
+        </a>
+      </form>
+    </div>
+    <div class="col-8">
+      <span class="float-right">{{komen.pub_date|naturaltime}} | {{komen.votes|intword}} likes | </span>
+    </div>
+  </div>
+</div>
+<hr>
+{% endfor %}
+
+<section class="content">
+  <div class="container">
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="input-group">
+        {% for field in form %}
+        <input type="text" name="{{ field.name }}" id="id_{{ field.name }}" class="form-control" autocomplete="off"
+          placeholder="" required>
+        {% endfor %}
+        <span class="input-group-append">
+          <button type="submit" class="btn bg-gradient-secondary">Send</button>
+        </span>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

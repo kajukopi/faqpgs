@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block container %}
+
+<!--Login-->
+
+<div class="d-grid gap-2 col-12 mx-auto">
+  <div class="shadow p-3 mb-2 bg-body rounded">
+    <form method="POST">
+      {% csrf_token %}
+      {% for field in login_form %}
+      <!-- Name input -->
+      <div class="form-outline mb-2">
+        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="id_{{ field.name }}"
+          class="form-control" autocomplete="off" placeholder="{{ field.name|title }}" required>
+      </div>
+      {% endfor %}
+      <!-- Submit button -->
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-outline-secondary mb-4 btn-sm">
+          Login
+        </button>
+      </div>
+    </form>
+    <p class="text-justify">Don't have an account? <a href="/register">Create an account</a>.</p>
+    <p class="text-justify">Username and Password case are sensitive, for username you can use your own NIK (Nomor Induk Karyawan) example = AA12345 and password is your birthday
+      example = 01 November 1980, then your password is 19801101</p>
+  </div>
+</div>
+
+{% endblock %}

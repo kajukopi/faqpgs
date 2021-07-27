@@ -1,0 +1,39 @@
+{% load static %}
+<nav class="main-header navbar sticky-top navbar-expand-md navbar-light navbar-white mb-2">
+  <div class="container">
+    <a class="btn btn-app" href="{% url 'faq:index' %}">
+      <i class="fas fa-home"></i> Home
+    </a>
+    {% if user.is_authenticated %}
+    <a class="btn btn-app" href="{% url 'faq:search' %}">
+      <i class="fas fa-search"></i> Search
+    </a>
+    <a class="btn btn-app" href="{% url 'faq:create' %}">
+      <i class="fas fa-plus-circle"></i> Create Post
+    </a>
+    <a class="btn btn-app" href="{% url 'faq:search-profile' user.id %}">
+      <i class="fas fa-user-alt"></i> Profie
+    </a>
+    <a class="btn btn-app" href="{% url 'faq:logout' %}">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+    {% else %}
+    <a class="btn btn-app" href="{% url 'faq:login' %}">
+      <i class="fas fa-sign-out-alt"></i> Login
+    </a>
+    {% endif %}
+  </div>
+  {% if user.is_authenticated %}
+  <form class="form-inline btn-block" method="GET" action="{% url 'faq:index' %}">
+    <div class="input-group input-group-sm">
+      <input class="form-control form-control-navbar" name="search" type="search" placeholder="Search post"
+        aria-label="Search">
+      <div class="input-group-append">
+        <button class="btn btn-navbar" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+  {% endif %}
+</nav>

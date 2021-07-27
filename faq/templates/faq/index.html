@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block style %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block container %}
+{% if pertanyaans %}
+{% for pertanyaan in pertanyaans %}
+
+<div class="row mb-1">
+  {% for image in images %}{% if image.user_id == pertanyaan.user_id %}
+  {% ifchanged image.user %}
+  <div class="col-2">
+    
+      <img src="{{image.img.url}}" alt="{{pertanyaan.user}}" class="img-circle elevation-3" style="width: 40px; height: 40px; object-fit: contain;">
+    
+  </div>
+  {% endifchanged %}{% endif %}{% endfor %}
+  <div class="col-9">
+    <p class="text-justify"><strong><a href="{% url 'faq:search-profile' pertanyaan.user_id %}" class="link-black">{{ pertanyaan.user|upper }}</a></strong> {{ pertanyaan.pertanyaan_text}}</p>
+  </div>
+  <div class="col-1">
+    <form id="like_{{pertanyaan.id}}" action="{% url 'faq:vote' pertanyaan.id %}" method="post">
+      {% csrf_token %}
+      <a class="link-black" onclick="document.getElementById('like_{{pertanyaan.id}}').submit();">
+        <i class="fas fa-heart"></i>
+      </a>
+    </form>
+
+    {% if user.id == pertanyaan.user_id %}
+    <form id="del_{{pertanyaan.id}}" method="POST" action="{% url 'faq:delete' pertanyaan.id %}">
+      {% csrf_token %}
+      <a class="link-black" onclick="document.getElementById('del_{{pertanyaan.id}}').submit();">
+        <i class="fas fa-trash-alt"></i>
+      </a>
+    </form>
+    {% endif %}
+    {% if user.is_superuser %}
+    <form id="del_{{pertanyaan.id}}" method="POST" action="{% url 'faq:delete' pertanyaan.id %}">
+      {% csrf_token %}
+      <a class="link-black" onclick="document.getElementById('del_{{pertanyaan.id}}').submit();">
+        <i class="fas fa-trash-alt"></i>
+      </a>
+    </form>
+    {% endif %}
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <span class="float-left text-muted">
+      <a href="{% url 'faq:detail' pertanyaan.id %}" class="link-black text-sm">
+        View all {{ pertanyaan.get_posts_count }} comments
+      </a>
+    </span>
+    <span class="float-right text-muted">
+      {{ pertanyaan.pub_date|naturaltime }} | {{ pertanyaan.votes|intword }} likes
+    </span>
+  </div>
+</div>
+<hr>
+<br>
+{% endfor %}
+</div>
+{% else %}
+<section class="content">
+  <div class="container">
+    <p></p>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

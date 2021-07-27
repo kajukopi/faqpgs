@@ -1,0 +1,34 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Blank Page</title>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  {% block style %}
+  {% endblock %}
+</head>
+
+<body class="">
+  {% include 'navbar.html' %}
+  <div class="p-3 text-sm">{% block container %}{% endblock %}</div>
+
+
+
+  <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+  <script src="{% static 'dist/js/demo.js' %}"></script>
+  <script src="{% static 'plugins/dropzone/min/dropzone.min.js' %}"></script>
+  {% block script %}
+
+  {% endblock %}
+</body>
+
+</html>
